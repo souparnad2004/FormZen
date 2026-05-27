@@ -4,10 +4,12 @@ import * as authService from "../services/auth.service.js";
 import { router } from "../trpc.js";
 import { protectedProcedure } from "../middlewares/auth.js";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax" as const,
+  secure: isProduction,
+  sameSite: isProduction ? ("none" as const) : ("lax" as const),
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
@@ -35,8 +37,8 @@ export const authRouter = router({
   logout: protectedProcedure.mutation(async ({ ctx }) => {
     ctx.res.clearCookie("jwt", {
       httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: cookieOptions.sameSite,
+      secure: cookieOptions.secure,
     });
     return {
       message: "Logged out successfully",

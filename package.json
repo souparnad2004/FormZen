@@ -5,10 +5,17 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
+    "build:api": "turbo build --filter=api",
+    "build:web": "turbo build --filter=web",
+    "start": "pnpm start:api",
     "start:api": "pnpm --filter api start",
+    "start:web": "pnpm --filter web start",
     "lint": "turbo lint",
     "db:generate": "dotenv -- turbo db:generate",
     "db:migrate": "dotenv -- turbo db:migrate"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "type": "module",
   "devDependencies": {
