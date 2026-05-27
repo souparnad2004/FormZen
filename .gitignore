@@ -2,9 +2,6 @@
 /node_modules
 .pnpm-store
 
-# Lockfiles
-pnpm-lock.yaml
-
 # Build output & caches
 /dist
 /build

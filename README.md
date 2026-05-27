@@ -46,9 +46,7 @@ The web build requires `VITE_API_URL` in production because Vite embeds it at bu
 
 ## Railway Deployment
 
-Deploy this as two Railway services from the same GitHub repo.
-
-The checked-in `railway.json` is configured for the API service by default. For the web service, override the build and start commands in Railway's service settings.
+Deploy this as two Railway services from the same GitHub repo. Set the build and start commands separately for each service in Railway's service settings.
 
 ### 1. Create Postgres
 
