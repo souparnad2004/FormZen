@@ -8,6 +8,6 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   dts: false,
-  external: ["pg"],
+  external: ["bcryptjs", "dotenv", "jsonwebtoken", "pg", "slugify"],
   noExternal: [/^@repo\//],
 });
