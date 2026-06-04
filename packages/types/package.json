@@ -5,6 +5,8 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "type": "module",
   "dependencies": {
