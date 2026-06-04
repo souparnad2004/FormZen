@@ -3,9 +3,16 @@ export { z } from 'zod';
 
 declare const userSchema: z.ZodObject<{
     id: z.ZodString;
-    name: z.ZodString;
-    email: z.ZodEmail;
-    email_verified: z.ZodBoolean;
+    username: z.ZodString;
+    email: z.ZodString;
+    role: z.ZodDefault<z.ZodEnum<{
+        admin: "admin";
+        user: "user";
+    }>>;
+    emailVerified: z.ZodBoolean;
+    profileImageUrl: z.ZodString;
+    createdAt: z.ZodString;
+    updatedAt: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 declare const registerSchema: z.ZodObject<{
     name: z.ZodString;
@@ -19,9 +26,16 @@ declare const loginSchema: z.ZodObject<{
 declare const authResponseSchema: z.ZodObject<{
     user: z.ZodObject<{
         id: z.ZodString;
-        email: z.ZodEmail;
-        name: z.ZodString;
-        email_verified: z.ZodBoolean;
+        username: z.ZodString;
+        email: z.ZodString;
+        role: z.ZodDefault<z.ZodEnum<{
+            admin: "admin";
+            user: "user";
+        }>>;
+        emailVerified: z.ZodBoolean;
+        profileImageUrl: z.ZodString;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
     token: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;

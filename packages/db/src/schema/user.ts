@@ -7,7 +7,7 @@ export const users = pgTable("users", {
   id: uuid().defaultRandom().primaryKey(),
   username: text("username").notNull(),
   email: text("email").unique().notNull(),
-  emailVerfied: boolean("email_verified").default(false),
+  emailVerified: boolean("email_verified").default(false),
   role: roleEnum("role").default("user"),
   profileImageUrl: text("profile_img_url"),
   password: text("password").notNull(),
@@ -18,3 +18,5 @@ export const users = pgTable("users", {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export type UserType = typeof users.$inferSelect;

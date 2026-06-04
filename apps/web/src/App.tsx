@@ -12,6 +12,7 @@ import AnalyticsPage from "./pages/dashboard/AnalyticsPage";
 import ResponsesPage from "./pages/dashboard/ResponsesPage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
 import PublicFormPage from "./pages/PublicFormPage";
+import UserProfile from "./pages/Profile";
 
 function App() {
   return (
@@ -22,11 +23,11 @@ function App() {
       <Route path="/f/:slug" element={<PublicFormPage />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard/forms/new" element={<CreateFormPage />} />
-
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/dashboard/forms" element={<FormsPage />} />
+          <Route path="/dashboard/forms/new" element={<CreateFormPage />} />
           <Route path="/dashboard/responses" element={<ResponsesPage />} />
           <Route path="/dashboard/settings" element={<SettingsPage />} />
           <Route

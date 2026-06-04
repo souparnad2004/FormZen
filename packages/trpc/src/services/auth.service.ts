@@ -6,6 +6,21 @@ import type { Payload } from "../lib/jwt.js";
 import type { Db } from "@repo/db";
 import { users } from "@repo/db";
 
+type AuthUser = typeof users.$inferSelect;
+
+function toAuthUser(user: AuthUser) {
+    return {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        emailVerified: Boolean(user.emailVerified),
+        profileImageUrl: user.profileImageUrl ?? "",
+        createdAt: user.createdAt.toISOString(),
+        updatedAt: user.updatedAt ? user.updatedAt.toISOString() : null,
+        role: user.role ?? "user",
+    };
+}
+
 export async function loginUser(db: Db, data: LoginSchemaType) {
     const {email, password} = data;
     const user = await db.query.users.findFirst({
@@ -32,12 +47,7 @@ export async function loginUser(db: Db, data: LoginSchemaType) {
         role: user.role as Payload["role"]
     })
     return {
-        user: {
-            id: user.id,
-            email: user.email,
-            name: user.username,
-            email_verified: user.emailVerfied
-        },
+        user: toAuthUser(user),
         token: token ?? undefined
     }
 }
@@ -72,12 +82,7 @@ export async function registerUser(db: Db, data: RegisterSchemaType) {
         role: user.role as Payload["role"]
     })
     return {
-        user: {
-            id: user.id,
-            email: user.email,
-            name: user.username,
-            email_verified: user.emailVerfied
-        },
+        user: toAuthUser(user),
         token: token ?? undefined
     }
 }
@@ -100,11 +105,6 @@ export async function me(db: Db, userId: string) {
         })
     }
     return {
-        user: {
-            id: user.id,
-            email: user.email,
-            name: user.username,
-            email_verified: user.emailVerfied
-        }
+        user: toAuthUser(user)
     };
 }

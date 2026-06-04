@@ -2,9 +2,13 @@ import {z} from "zod";
 
 export const userSchema = z.object({
   id: z.string(),
-  name: z.string(),
-  email: z.email("Invalid email"),
-  email_verified: z.boolean(),
+  username: z.string(),
+  email: z.string(),
+  role: z.enum(["admin", "user"]).default("user"),
+  emailVerified: z.boolean(),
+  profileImageUrl: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable()
 });
 
 export const registerSchema = z.object({
@@ -19,12 +23,7 @@ export const loginSchema = z.object({
 });
 
 export const authResponseSchema = z.object({
-  user: z.object({
-    id: z.string(),
-    email: z.email(),
-    name: z.string(),
-    email_verified: z.boolean(),
-  }),
+  user: userSchema,
   token: z.string().optional(),
 })
 

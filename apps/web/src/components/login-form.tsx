@@ -18,7 +18,6 @@ import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "@/store/auth";
-import type {UserSchemaType} from "@repo/types"
 import { getFriendlyErrorMessage } from "@/lib/error-message";
 
 export function LoginForm({
@@ -34,8 +33,8 @@ export function LoginForm({
 
   const login = trpc.auth.login.useMutation({
     onSuccess(data) {
-      navigate("/dashboard")
-      store_login(data as UserSchemaType)
+      store_login(data);
+      navigate("/dashboard");
     },
     onError: (error) => {
       setError(getFriendlyErrorMessage(error, "Unable to log in. Please try again."));

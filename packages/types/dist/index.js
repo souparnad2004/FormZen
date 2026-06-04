@@ -2,9 +2,13 @@
 import { z } from "zod";
 var userSchema = z.object({
   id: z.string(),
-  name: z.string(),
-  email: z.email("Invalid email"),
-  email_verified: z.boolean()
+  username: z.string(),
+  email: z.string(),
+  role: z.enum(["admin", "user"]).default("user"),
+  emailVerified: z.boolean(),
+  profileImageUrl: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string().nullable()
 });
 var registerSchema = z.object({
   name: z.string().min(2),
@@ -16,12 +20,7 @@ var loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters")
 });
 var authResponseSchema = z.object({
-  user: z.object({
-    id: z.string(),
-    email: z.email(),
-    name: z.string(),
-    email_verified: z.boolean()
-  }),
+  user: userSchema,
   token: z.string().optional()
 });
 

@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { trpc } from "@/lib/trpc"
 import { getFriendlyErrorMessage } from "@/lib/error-message"
 import { useNavigate } from "react-router"
+import { useAuthStore } from "@/store/auth"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [name, setName] = useState("");
@@ -26,9 +27,11 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  const storeLogin = useAuthStore((state) => state.login);
 
   const register = trpc.auth.register.useMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      storeLogin(data);
       navigate("/dashboard");
     },
     onError: (error) => {

@@ -6,54 +6,31 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
-import {
-  BarChart3,
-  FilePlus2,
-  FileText,
-  LayoutDashboard,
-  Settings,
-} from "lucide-react";
+import { BarChart3, FileText, LayoutDashboard, Settings } from "lucide-react";
 
 const links = [
-  {
-    to: "/dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard,
-    end: true,
-  },
-  {
-    to: "/dashboard/forms",
-    label: "Forms",
-    icon: FileText,
-  },
-  {
-    to: "/dashboard/forms/new",
-    label: "Create Form",
-    icon: FilePlus2,
-  },
-  {
-    to: "/dashboard/responses",
-    label: "Responses",
-    icon: BarChart3,
-  },
-  {
-    to: "/dashboard/settings",
-    label: "Settings",
-    icon: Settings,
-  },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
+  { to: "/dashboard/forms", label: "Forms", icon: FileText },
+  { to: "/dashboard/responses", label: "Responses", icon: BarChart3 },
+  { to: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
-export function AppSidebar() {
+function SidebarContentBlock() {
+  const { setOpenMobile } = useSidebar();
+
   return (
-    <Sidebar>
+    <>
       <SidebarHeader className="border-b border-sidebar-border px-3 py-4">
         <div className="flex items-center gap-2 px-2 text-lg font-semibold">
-          <span className="size-2 rounded-full bg-primary shadow-[0_0_18px_color-mix(in_oklch,var(--primary)_70%,transparent)]" />
+          <span className="size-2 rounded-full bg-primary" />
           FormZen
         </div>
       </SidebarHeader>
+
       <SidebarContent>
         <SidebarMenu>
           {links.map((link) => {
@@ -65,8 +42,11 @@ export function AppSidebar() {
                   <NavLink
                     to={link.to}
                     end={link.end}
+                    onClick={() => setOpenMobile(false)}
                     className={({ isActive }) =>
-                      isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : ""
+                      isActive
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                        : ""
                     }
                   >
                     <Icon />
@@ -78,6 +58,15 @@ export function AppSidebar() {
           })}
         </SidebarMenu>
       </SidebarContent>
+    </>
+  );
+}
+
+export function AppSidebar() {
+  return (
+    <Sidebar collapsible="offcanvas">
+      <SidebarContentBlock />
+      <SidebarRail />
     </Sidebar>
   );
 }
