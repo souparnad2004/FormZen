@@ -22,7 +22,7 @@ export function SiteHeader({fn}:{fn: () => void}) {
         <div className="min-w-0">
           <h1 className="flex items-center gap-2 font-semibold text-lg">
             <Sparkles className="size-4 shrink-0 text-primary" />
-            <span className="truncate">Creator Studio</span>
+            <span className="truncate cursor-pointer" onClick={() => navigate("/")}>Creator Studio</span>
           </h1>
           <p className="hidden text-xs text-muted-foreground sm:block">
             Build, publish and review form campaigns.
