@@ -6,10 +6,13 @@
     "./tsconfig/*": "./tsconfig/*.json",
     ".": "./src/index.ts"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "tsup"
+  },
   "type": "module",
   "dependencies": {
     "dotenv": "^17.4.2",
+    "tsup": "^8.5.1",
     "zod": "^4.4.3"
   }
 }
