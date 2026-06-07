@@ -89,14 +89,15 @@ export async function deleteForm(
   formId: string,
   userId: string,
 ) {
-  const form = await getFormById(db, formId, userId);
+  await getFormById(db, formId, userId);
 
-  if(!form) throw new TRPCError({code: "NOT_FOUND", message: "Form not found"})
+  const deleted = await db
+    .delete(forms)
+    .where(and(eq(forms.id, formId), eq(forms.userId, userId)))
+    .returning();
 
-  const updated = await db.delete(forms).where(and(eq(forms.id, formId), eq(forms.userId, userId)))
-  return updated;
+  return deleted[0];
 }
-
 
 export async function getFormWithFields(db: Db, slug: string) {
   const form = await db.query.forms.findFirst({
